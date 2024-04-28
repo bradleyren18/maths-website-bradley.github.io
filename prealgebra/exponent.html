@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>add</title>
+        <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <style>
+            sup {
+                vertical-align: super;
+                font-size: medium;
+            }
+        </style>
+    </head>
+    <body>
+        <p>
+            An exponent of a number x is simply that number multiplied to itself a given number y times.
+            We can write: x <sup>y</sup>.
+            Questions: 
+        </p>
+        <div id="div"></div>
+        <a href="base_preagebra.html">End Practice</a>
+        <script type="text/babel">
+            function App(){
+                console.log("print 1");
+                var [state, setstate] = React.useState({
+                    num1: Math.ceil(Math.random() * 5),
+                    num2: Math.ceil(Math.random() * 5),
+                    score: 0,
+                    response: "",
+                });
+
+                function keyPress(event){
+                    if (event.key === "Enter"){
+                        var answer = parseInt(state.response);
+                        if (state.num1 ** state.num2 === answer){
+                            setstate({
+                                num1: Math.ceil(Math.random() * 5),
+                                num2: Math.ceil(Math.random() * 5),
+                                score: state.score + 5,
+                                response: ""
+                            })
+                        }
+                        else{
+                            setstate({
+                                num1: Math.ceil(Math.random() * 5),
+                                num2: Math.ceil(Math.random() * 5),
+                                score: state.score - 2,
+                                response: ""
+                            })
+                        }
+                    }
+                }
+
+                function updateResponse(event){
+                    setstate({
+                        ...state,
+                        response: event.target.value,
+                    });
+                }
+
+                function restartGame(){
+                    setstate({
+                        ...state,
+                        score: 0,
+                    })
+                }
+
+
+                if (state.score < 0){
+                    return (
+                        <div>
+                            <div>GAME OVER</div>
+                            <button onClick={restartGame}>Restart</button>
+                        </div>
+                    );
+                }else {
+                    return (
+                        <div>
+                            <div>{state.num1} <sup>{state.num2}</sup></div>
+                            <input autoFocus={true} onKeyPress={keyPress} onChange={updateResponse} value={state.response} />
+                            <div>Score is {state.score}</div> 
+                        </div>
+                    );
+                }
+            }
+
+            ReactDOM.render(<App />, document.getElementById("div"))
+        </script>
+    </body>
+</html>

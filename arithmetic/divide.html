@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>add</title>
+        <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    </head>
+    <body>
+        <div id="div"></div>
+        <a href="base_arithmetic.html">End Practice</a>
+        <script type="text/babel">
+            function App(){
+                var [state, setstate] = React.useState({
+                    num1: Math.ceil(Math.random() * 10),
+                    score: 0,
+                    response: "",
+                });
+                
+                React.useEffect(() => {
+                    const initialNum2 = state.num1 * Math.round(Math.random() * 10);
+                    setstate(prevState => ({
+                        ...prevState,
+                        num2: initialNum2
+                    }));                    
+                }, []); // Empty dependency array to run only once after the initial render
+
+                console.log([state.num1, state.num2]);
+
+                function keyPress(event){
+                    if (event.key === "Enter"){
+                        var answer = parseInt(state.response);
+                        var localNum1 = Math.ceil(Math.random() * 10)
+                        if (state.num2 / state.num1 === answer){
+                            setstate({
+                                num1: localNum1,
+                                num2: localNum1 * Math.ceil(Math.random() * 10),
+                                score: state.score + 5,
+                                response: ""
+                            })
+                        }
+                        else{
+                            setstate({
+                                num1: localNum1,
+                                num2: localNum1 * Math.ceil(Math.random() * 10),
+                                score: state.score - 2,
+                                response: ""
+                            })
+                        }
+                    }
+                }
+
+                function updateResponse(event){
+                    setstate({
+                        ...state,
+                        response: event.target.value,
+                    });
+                }
+
+                function restartGame(){
+                    setstate({
+                        ...state,
+                        score: 0,
+                    })
+                }
+
+
+                if (state.score < 0){
+                    return (
+                        <div>
+                            <div>GAME OVER</div>
+                            <button onClick={restartGame}>Restart</button>
+                        </div>
+                    );
+                }else {
+                    return (
+                        <div>
+                            <input autoFocus={true} onKeyPress={keyPress} onChange={updateResponse} value={state.response} />
+                            <div>{state.num2} ÷ {state.num1}</div>
+                            <div>Score is {state.score}</div> 
+                        </div>
+                    );
+                }
+            }
+
+            ReactDOM.render(<App />, document.getElementById("div"))
+        </script>
+    </body>
+</html>

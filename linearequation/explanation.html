@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <p>
+            In the prealgebra session, we solved equations with one variable.
+            But what about two?
+            In this topic, we are going to explore the world of two variable linear equations.
+            There are two main methods:substitution and elimination.
+            Click on the buttons below to find out about them.
+            <button id="button1">Substitution</button>
+            <button id="button2">Elimination</button>
+            <div id="div"></div>
+        </p>
+        <a href="base_linearequation.html">go back to linear equation home page.</a>
+        <br>
+        <a href="algebra_2_variables.html">2-variable linear equation practice</a>
+    </body>
+    <script>
+        document.getElementById("button1").onclick = function(){
+            if(document.getElementById("div").innerText === ""){
+                document.getElementById("div").innerText = `Here is an example of substitution: 
+                    	Consider the equations x + y = 10 and 10x + 8y = 98:
+                        First, rearrange the first equation to be x = 10 - y:
+                        Then, plug this into the second equation:
+                        10(10 - y) + 8y = 98
+                        100 - 10y + 8y = 98
+                        100 - 2y = 98
+                        y = 1
+                        x = 9 `
+            }
+            else{
+                document.getElementById("div").innerText   = ""
+            }
+        }
+        document.getElementById("button2").onclick = function(){
+            if(document.getElementById("div").innerText === ""){
+                document.getElementById("div").innerText = `Here is an example of elimination: 
+                    	Consider the same equations x + y = 10 and 10x + 8y = 98:
+                        First, multiply both sides of the first equation by 10:
+                        10x + 10y = 100
+                        Then, subtract the second equation from it:
+                        (10x + 10y) - (10x + 8y) = 100 - 98
+                        2y = 2
+                        y = 1
+                        x = 9 
+                        This is called "eliminating a variable"`
+            }
+            else{
+                document.getElementById("div").innerText   = ""
+            }
+        }
+    </script>
+</html>

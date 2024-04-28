@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>add</title>
+        <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    </head>
+    <body>
+        <div id="cobblesHome"></div>
+        <script type="text/babel">
+            function Cobble(){
+
+                var [state, setstate] = React.useState({
+                    x: Math.ceil(Math.random() * 10),
+                    y: Math.ceil(Math.random() * 10),
+                    constantx: Math.ceil(Math.random() * 20),
+                    constanty: Math.ceil(Math.random() * 20),
+                    constantx1: Math.ceil(Math.random() * 20),
+                    constanty1: Math.ceil(Math.random() * 20),
+                    ans1: 0,
+                    ans2: 0,
+                    score: 0,
+                    response1: "",
+                    response2: "",
+                });
+
+                React.useEffect(() => {
+                    const initialAns1 = state.constantx * state.x + state.constanty * state.y;
+                    const initialAns2 = state.constantx1 * state.x - state.constanty1 * state.y;
+                    setstate(prevState => ({
+                        ...prevState,
+                        ans1: initialAns1,
+                        ans2: initialAns2,
+
+                    }));
+                }, []); // Empty dependency array to run only once after the initial render
+
+                function keyPress(event){
+                    var answer1 = parseInt(state.response1);
+                    var answer2 = parseInt(state.response2);
+                    var localX = Math.ceil(Math.random() * 10)
+                    var localY = Math.ceil(Math.random() * 10)
+                    var constantX = Math.ceil(Math.random() * 20)
+                    var constantY =  Math.ceil(Math.random() * 20)
+                    var constantX1 = Math.ceil(Math.random() * 20)
+                    var constantY1 =  Math.ceil(Math.random() * 20)
+                    if(state.x === answer1 && state.y === answer2){
+                        alert("Correct answer!")
+                        setstate({
+                            x:localX,
+                            y: localY,
+                            constantx: constantX,
+                            constanty: constantY,
+                            constantx1: constantX1,
+                            constanty1: constantY1,
+                            ans1: constantX*localX + constantY*localY,
+                            ans2: constantX1*localX - constantY1*localY,
+                            score: state.score + 5,
+                            response1: "",
+                            response2: "",
+                        })
+                    }
+                    else{
+                        alert("Wrong answer");
+                        setstate({
+                            x:localX,
+                            y: localY,
+                            constantx: constantX,
+                            constanty: constantY,
+                            constantx1: constantX1,
+                            constanty1: constantY1,
+                            ans1: constantX*localX + constantY*localY,
+                            ans2: constantX1*localX - constantY1*localY,
+                            score: state.score + 5,
+                            response1: "",
+                            response2: "",
+                        })
+                        
+                    }
+                }
+
+                function updateResponse1(event){
+                    setstate({
+                        ...state,
+                        response1: event.target.value,
+                    });
+                }
+
+                function updateResponse2(event){
+                    setstate({
+                        ...state,
+                        response2: event.target.value,
+                    });
+                }
+
+                function restartGame(){
+                    setstate({
+                        ...state,
+                        score: 0,
+                    })
+                }
+
+                if (state.score < 0){
+                    return (
+                        <div>
+                            <div>GAME OVER</div>
+                            <button onClick={restartGame}>Restart</button>
+                        </div>
+                    );
+                }else {
+                    return (
+                        <div>
+                            <div>{state.constantx}x + {state.constanty}y = {state.ans1}</div>
+                            <div>{state.constantx1}x - {state.constanty1}y = {state.ans2}</div>
+                            X: <input autoFocus={true}  onChange={updateResponse1} value={state.response1} />
+                            Y: <input autoFocus={true}  onChange={updateResponse2} value={state.response2} />
+                            <br />
+                            <br />
+                            <button onClick={keyPress}>Submit values</button>
+                            <br />
+                            <br />
+                            <div>Score is {state.score}</div>
+                        </div>
+                    );
+                }
+            }
+            ReactDOM.render(<Cobble />, document.getElementById("cobblesHome"))
+        </script>
+    </body>
+</html>
